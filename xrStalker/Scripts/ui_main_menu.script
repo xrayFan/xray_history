@@ -26,7 +26,10 @@ function main_menu:InitControls()
 	----- DATA ----
 	local indent          = 50
 	local screen          = {width = 1024,height = 768}	
-	local main_rect       = {x = 0,      y = 0,      width = 800, height = 600}	
+	local main_rect       = {x = 0,
+							 y = 0,
+							 width = screen.width, 
+							 height = screen.height}	
 	main_rect.x = (screen.width - main_rect.width)/2
 	main_rect.y = (screen.height - main_rect.height)/2
 	local caption_rect    = {x = 0,      y = 0,      width = main_rect.width, height = indent*2}
@@ -81,7 +84,7 @@ function main_menu:InitControls()
 	txt_caption:SetAutoDelete(true)
 	txt_caption:SetWindowName("txt_caption")
 	txt_caption:SetFont(GetFontLetterica25())
-	txt_caption:SetText("Load Dialog")
+	txt_caption:SetText("MAIN_MENU")
 	txt_caption:SetTextAlign(CGameFont.alCenter)
 	txt_caption:Init(captiontxt_rect.x, captiontxt_rect.y, caption_rect.width, caption_rect.height)
 	main_frame:AttachChild(txt_caption)
