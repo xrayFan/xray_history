@@ -26,14 +26,14 @@ function save_dialog:InitControls()
 	main_static:SetAutoDelete(true)              --parent will delete this item in destructor
 	main_static:SetWindowName("main_frame")
 	--init texture and position relatively parent	
-	main_static:Init("ui\\ui_inv_personal_over",0,0,main_rect.width, main_rect.height)
+	main_static:Init("ui\\ui_pop_up",0,0,main_rect.width, main_rect.height)
     --textures name, root is Gamedata\Textures folder
 --	main_static:ClipperOn() --clip texture by window region
 	self:AttachChild(main_static)
 	
 
 	------------LIST EXAMPLE-----------------
-	     local txt_list   = CUIStatic()  --background for ListView
+--[[   local txt_list   = CUIStatic()  --background for ListView
        txt_list:SetAutoDelete(true)
        txt_list:Init("ui\\hud_map_back",10,10,154,148)
        txt_list:ClipperOn()
@@ -46,7 +46,7 @@ function save_dialog:InitControls()
     list_wnd:SetItemHeight(15)
     list_wnd:EnableScrollBar(true)
     main_static:AttachChild(list_wnd)
-
+]]
 --------------------------------------- 
     local btn   = CUIButton()
 	btn:SetAutoDelete(true) 
