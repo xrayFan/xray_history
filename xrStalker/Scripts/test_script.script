@@ -2,32 +2,43 @@ module("ui_save_dialog")
 module("ui_load_dialog")
 
 function dump_time(t)
-printf("----dump time start")
-	printf(t:dateToString(time_struct.DateToDay))
-	printf(t:dateToString(time_struct.DateToMonth))
-	printf(t:dateToString(time_struct.DateToYear))
+/*	printf(t:dateToString(game.time_struct.DateToDay))
+	printf(t:dateToString(game.time_struct.DateToMonth))
+	printf(t:dateToString(game.time_struct.DateToYear))
 	
-	printf(t:timeToString(time_struct.TimeToHours))
-	printf(t:timeToString(time_struct.TimeToMinutes))
-	printf(t:timeToString(time_struct.TimeToSeconds))
-	printf(t:timeToString(time_struct.TimeToMilisecs))
-printf("----dump time end")
+	printf(t:timeToString(game.time_struct.TimeToHours))
+	printf(t:timeToString(game.time_struct.TimeToMinutes))
+	printf(t:timeToString(game.time_struct.TimeToSeconds))
+*/	
+	printf(t:timeToString(game.time_struct.TimeToMilisecs))
 printf("")
 end
 
 function main()
---local dlg = ui_main_menu.main_menu()
---level.start_stop_menu(dlg,true)
---	while (1) do
-	--	wait(1000)
-	--end
-	local t = game.time2()
-	dump_time(t)
-	wait(10000)
+printf("----------------------main----")
+	local dt = game.time_struct()
+	dt:setHMSms(3,4,5,67)
+	dump_time(dt)
 	
-	local t2 = game.time2()
-	dump_time(t2)
-	local t3 = t2-t
-	dump_time(t3)
+	local dt2 = game.time_struct(dt)
+	dump_time(dt2)
+	dump_time(dt)
+	
+	if dt==dt2 then 
+		printf("equal")
+	else
+		printf("not equal")
+	end
+
+	dt2:setHMSms(13,4,5,67)
+	dump_time(dt2)
+	dump_time(dt)
+
+	if dt==dt2 then 
+		printf("equal")
+	else
+		printf("not equal")
+	end
+
 	
 end
