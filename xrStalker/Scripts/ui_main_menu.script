@@ -5,6 +5,13 @@
 -- Author:      Serhiy Vynnychenko (narrator@gsc-game.kiev.ua)
 -- Version:     0.1
 
+
+function main()
+	local dlg = ui_main_menu.main_menu()
+	level.start_stop_menu(dlg,true)
+end
+
+
 class "main_menu" (CUIScriptWnd)
 
 function main_menu:__init() super()
@@ -23,6 +30,7 @@ function main_menu:SetClGame(game_cl)
 end
 
 function main_menu:InitControls()
+	printf("hello bill gates")
 	----- DATA ----
 	local indent          = 50
 	local screen          = {width = 1024,height = 768}	
@@ -97,10 +105,10 @@ function main_menu:InitControls()
 	main_frame:AttachChild(btn)
 	--------->> LOAD
 	
-	btn = CUIButton()
-	btn:SetAutoDelete(true)
-	btn:SetWindowName("btn_load")
-	btn:Init("ui\\ui_button_")
+--	btn = CUIButton()
+--	-btn:SetAutoDelete(true)
+--	btn:SetWindowName("btn_load")
+	--btn:Init("ui\\ui_button_")
 	
 	
 	
