@@ -1,9 +1,9 @@
--- File:        UI_MAIN_MENU.SCRIPT
+-- File:        UI_NEW_GAME_DIALOG.SCRIPT
 -- Description: Load Dialog for STALKER
 -- Created:     28.10.2004
 -- Copyright:   2004 GSC Game World
 -- Author:      Serhiy Vynnychenko (narrator@gsc-game.kiev.ua)
--- Version:     0.1
+-- Version:     0.7
 
 
 function main()
@@ -15,7 +15,7 @@ function main()
 end
 
 
-class "new_game_dlg" (CUIScriptWnd)
+class "new_game_dlg" (ui_base_dialog.base_dialog)
 
 function new_game_dlg:__init() super()
    self:SetFont(GetFontMedium()) --set base font for dialog.
