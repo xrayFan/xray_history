@@ -36,20 +36,14 @@ function load_dialog:FillList()
 	local flist = getFS():file_list_open_ex("$game_saves$",FS.FS_ListFiles,"*.sav")
 	local f_cnt = flist:Size()
 	
-	----------------------------------------------------------------
---[[	printf("---FS_sort_by_modif_down")
-	fs_list:Sort(FS.FS_sort_by_modif_down)
-	for it=0,sz-1 do
-	local fl = fs_list:GetAt(it)
-		printf("file name=%s; file_size=%d;file_modif=%s",fl:NameFull(),fl:Size(),fl:Modif() )
-	end]]
-	----------------------------------------------------------------
 	flist:Sort(FS.FS_sort_by_modif_down)
 	
 	for	it=0, f_cnt-1 	do
 		local file		=	flist:GetAt(it)			
-		menu_item = string.sub(file:NameFull(), 0, (string.len(file:NameFull()) - 4)) .. "[" .. file:Modif() .. "]"
-		self:AddItemToList(menu_item)
+		local file_name = string.sub(file:NameFull(), 0, (string.len(file:NameFull()) - 4))
+		local date_time = "[" .. file:Modif() .. "]"
+		--menu_item =  .. 
+		self:AddItemToList(file_name, date_time)
 	end
 	
 end
@@ -232,22 +226,18 @@ function load_dialog:OnKeyboard(dik, keyboard_action)  --virtual function
    return true
 end
 
-function load_dialog:AddItemToList(item)
+function load_dialog:AddItemToList(file_name, date_time)
 	local new_item = CUIListItemPair()
-	new_item:SetTextDateTime("date-time")
-	new_item:SetTextFileName("file-name")
-	--new_item:SetText("fuck")
-	local list_box = self:GetListWnd("list_window")
-	local shift = 0
-	local color = GetARGB(255,0,255,255)
-	local parse = false	
 	
-	--list_box:AddText(item, shift, GetARGB(255,0,255,255), GetFontArialN21Russian(), parse)
+	new_item:SetTextFileName(file_name)
+	new_item:SetTextDateTime(date_time)
+	
+	
+	local list_box = self:GetListWnd("list_window")
+	
 	list_box:AddItem(new_item)
 	
 end
 
-function load_dialog:ItemIsInList(item)
-	return false
-end
+
 
