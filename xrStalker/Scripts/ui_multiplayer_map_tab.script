@@ -6,14 +6,14 @@
 --
 
 function main()
-	local dlg = ui_multiplayer_create_map_tab.create_map_tab()
+	local dlg = ui_multiplayer_map_tab.create_map_tab()
 	level.start_stop_menu(dlg,true)	
 	while true do
 		wait(3000)
 	end
 end
 
-class "create_map_tab" (ui_multiplayer_base_tab.multiplayer_create_base_tab)													   
+class "create_map_tab" (ui_multiplayer_base_tab.multiplayer_base_tab)													   
 
 function create_map_tab:__init() super()
 	self:InitControls()
