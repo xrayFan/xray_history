@@ -21,6 +21,10 @@ function save_dialog:InitControls()
 	main_rect.x = (screen.width - main_rect.width)/2
 	main_rect.y = (screen.height - main_rect.height)/2
 	local caption_rect    = {x = 0,      y = 0,      width = main_rect.width, height = indent*2}
+	local captiontxt_rect = {x = caption_rect.width/2,
+							 y = caption_rect.height/2,
+							 width = 0,
+							 height = 0}
 	local edit_rect       = {x = indent, 
 						     y = caption_rect.y + caption_rect.height + indent,
 						     width = 500, 
@@ -44,23 +48,38 @@ function save_dialog:InitControls()
 	-- init self position and size
 	self:Init(main_rect.x, main_rect.y, main_rect.width, main_rect.height)
 	
-	-- Init Main Static		
-	local main_static = CUIFrameWindow()
-	main_static:SetAutoDelete(true)              --parent will delete this item in destructor
-	main_static:SetWindowName("main_frame")
+	-- MAIN FRAME WINDOW		
+	local main_frame = CUIFrameWindow()
+	main_frame:SetAutoDelete(true)              --parent will delete this item in destructor
+	main_frame:SetWindowName("main_frame")
 	--init texture and position relatively parent
-	main_static:Init("ui\\ui_pop_up",0,0,main_rect.width, main_rect.height)
+	main_frame:Init("ui\\ui_pop_up",0,0,main_rect.width, main_rect.height)
     --textures name, root is Gamedata\Textures folder
 --	main_static:ClipperOn() --clip texture by window region
-	self:AttachChild(main_static)
+	self:AttachChild(main_frame)
 	
+	-- CAPTION frame --
+	local wnd_caption = CUIFrameWindow()
+	wnd_caption:SetAutoDelete(true)
+	wnd_caption:SetWindowName("wnd_caption")
+	wnd_caption:Init("ui\\ui_pop_up",caption_rect.x, caption_rect.y, caption_rect.width, caption_rect.height)
+	main_frame:AttachChild(wnd_caption)
+	
+	local txt_caption = CUIStatic()
+	txt_caption:SetAutoDelete(true)
+	txt_caption:SetWindowName("txt_caption")
+	txt_caption:SetText("SAVE DIALOG")
+	txt_caption:SetTextAlign(CGameFont.alCenter)
+	txt_caption:Init(captiontxt_rect.x, captiontxt_rect.y, caption_rect.width, caption_rect.height)
+	main_frame:AttachChild(txt_caption)
+
 
 	------------LIST-----------------
-   local txt_list   = CUIFrameWindow()  --background for ListView
-   txt_list:SetAutoDelete(true)
-   txt_list:Init("ui\\ui_pop_up", list_rect.x, list_rect.y, list_rect.width, list_rect.height)
-   -- txt_list:ClipperOn()
-   main_static:AttachChild(txt_list) 
+    local txt_list   = CUIFrameWindow()  --background for ListView
+    txt_list:SetAutoDelete(true)
+    txt_list:Init("ui\\ui_pop_up", list_rect.x, list_rect.y, list_rect.width, list_rect.height)
+    -- txt_list:ClipperOn()
+    main_frame:AttachChild(txt_list) 
 
     local list_wnd = CUIListWnd()
     list_wnd:SetAutoDelete(true)
@@ -68,7 +87,7 @@ function save_dialog:InitControls()
     list_wnd:Init(0,0,154,148)
     list_wnd:SetItemHeight(15)
     list_wnd:EnableScrollBar(true)
-    main_static:AttachChild(list_wnd)
+    main_frame:AttachChild(list_wnd)
 
 --------------------------------------- 
     local btn   = CUIButton()
@@ -81,7 +100,7 @@ function save_dialog:InitControls()
 	btn:SetTextAlign(CGameFont.alCenter) --horizontal align. possible values are [alCenter,alLeft,alRight]
 	btn:SetTextY(20) --vertical align(pixel). set value to -1 for center
 	self:Register(btn) --for event-handling
-	main_static:AttachChild(btn)
+	main_frame:AttachChild(btn)
 --------------------------------------
     btn   = CUIButton()
     btn:SetAutoDelete(true)
@@ -92,7 +111,7 @@ function save_dialog:InitControls()
 	btn:SetTextAlign(CGameFont.alCenter)
 	btn:SetTextY(20)
 	self:Register(btn)
-	main_static:AttachChild(btn)
+	main_frame:AttachChild(btn)
 end
 
 function save_dialog:InitCallBacks()
@@ -101,12 +120,11 @@ function save_dialog:InitCallBacks()
 end
 
 function save_dialog:OnButton_ok_clicked()
-	
+	self.m_game_cl:StopMenu(self,true)
 end
 
 function save_dialog:OnButton_cancel_clicked()
-	
-
+	self.m_game_cl:StopMenu(self,true)
 end
 
 function save_dialog:OnKeyboard(dik, keyboard_action)  --virtual function
