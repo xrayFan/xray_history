@@ -24,7 +24,7 @@ function gametype_tab:InitControls(x_pos, y_pos, width, height)
 	
 	local rbtn_group_rect = {}
 	rbtn_group_rect.height = rbtn_rect.height*3 + self.indent*2
-	rbtn_group_rect.y = (self.main_rect.height - rbtn_group_rect.height)/2
+	rbtn_group_rect.y = (self.main_rect.height - rbtn_group_rect.height)/2 - 100
 	rbtn_group_rect.x = (self.main_rect.width - rbtn_rect.width)/2
 	
 	local rbtn_dm_rect	= { x		= rbtn_group_rect.x,
@@ -56,7 +56,7 @@ function gametype_tab:InitControls(x_pos, y_pos, width, height)
 	rbtn:SetFont(self.button_font)
 	rbtn:SetText("Death Match")
 	rbtn:SetTextAlign(CGameFont.alCenter)
-	rbtn:SetTextY(10)
+	rbtn:SetTextY(-1)
 	self:Register(rbtn)	
 	rgroup:AttachChild(rbtn)	
 
@@ -67,7 +67,7 @@ function gametype_tab:InitControls(x_pos, y_pos, width, height)
 	rbtn:SetFont(self.button_font)
 	rbtn:SetText("Team Death Match")
 	rbtn:SetTextAlign(CGameFont.alCenter)
-	rbtn:SetTextY(10)
+	rbtn:SetTextY(-1)
 	self:Register(rbtn)
 	rgroup:AttachChild(rbtn)	
 	
@@ -78,7 +78,7 @@ function gametype_tab:InitControls(x_pos, y_pos, width, height)
 	rbtn:SetFont(self.button_font)
 	rbtn:SetText("Artefact Hunt")
 	rbtn:SetTextAlign(CGameFont.alCenter)
-	rbtn:SetTextY(10)
+	rbtn:SetTextY(-1)
 	self:Register(rbtn)
 	rgroup:AttachChild(rbtn)	
 end
