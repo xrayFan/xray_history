@@ -7,7 +7,7 @@
 
 
 function main()
-	local dlg = ui_main_menu.main_menu()
+	local dlg = ui_options_dialog.options_dialog()
 	level.start_stop_menu(dlg,true)
 		while true do
 		wait(3000)
@@ -15,24 +15,24 @@ function main()
 end
 
 
-class "main_menu" (CUIScriptWnd)
+class "options_dialog" (CUIScriptWnd)
 
-function main_menu:__init() super()
+function options_dialog:__init() super()
    self:SetFont(GetFontMedium()) --set base font for dialog.
    
    self:InitControls()
    self:InitCallBacks()
 end
 
-function main_menu:__finalize()
+function options_dialog:__finalize()
 
 end
 
-function main_menu:SetClGame(game_cl)
+function options_dialog:SetClGame(game_cl)
    self.m_game_cl = game_cl
 end
 
-function main_menu:InitControls()
+function options_dialog:InitControls()
 
 	----- DATA ----
 	local indent          = 35
@@ -51,36 +51,32 @@ function main_menu:InitControls()
 							 height = 0}
 	     --->> BUTTONS
 	local btn_rect = {x = 0, y = 0, width = 135, height = 40}
-		  btn_rect.x = (main_rect.width - btn_rect.width)/2
-	local btn_new_rect    = {x = btn_rect.x,
+		  btn_rect.x = indent --(main_rect.width - btn_rect.width)/2
+	local btn_video_rect    = {x = btn_rect.x,
 							 y = caption_rect.y + caption_rect.height + indent,
 							 width = btn_rect.width,
 							 height = btn_rect.height}
 							 
-	local btn_load_rect   = {x = btn_rect.x,
-							 y = btn_new_rect.y + btn_new_rect.height + indent,
+	local btn_sound_rect   = {x = btn_rect.x,
+							 y = btn_video_rect.y + btn_video_rect.height + indent,
 							 width = btn_rect.width,
 							 height = btn_rect.height}
 							 
-	local btn_multi_rect  = {x = btn_rect.x,
-							 y = btn_load_rect.y + btn_load_rect.height + indent,
+	local btn_game_rect  = {x = btn_rect.x,
+							 y = btn_sound_rect.y + btn_sound_rect.height + indent,
 							 width = btn_rect.width,
 							 height = btn_rect.height}
 	
-	local btn_opt_rect    = {x = btn_rect.x,
-							 y = btn_multi_rect.y + btn_multi_rect.height + indent,
+	local btn_control_rect    = {x = btn_rect.x,
+							 y = btn_game_rect.y + btn_game_rect.height + indent,
 							 width = btn_rect.width,
 							 height = btn_rect.height}
 	-- Bottom align
-	local btn_quit_rect    = {x = btn_rect.x,
+	local btn_back_rect    = {x = btn_rect.x,
 							 y = main_rect.height - btn_rect.height - indent,
 							 width = btn_rect.width,
 							 height = btn_rect.height}
-	local btn_bonus_rect   = {x = btn_rect.x,
-							 y = btn_quit_rect.y - btn_rect.height - indent,
-							 width = btn_rect.width,
-							 height = btn_rect.height}
-	
+
 	message_rect = {x = 0, y = 0, width = 400, height = 300}
 	
 	----- CODE -------
@@ -88,7 +84,7 @@ function main_menu:InitControls()
 	-- init self position and size
 	self:Init(main_rect.x, main_rect.y, main_rect.width, main_rect.height)
 	
-	-- MAIN FRAME WINDOW		
+	-- MAIN FRAME WINDOW
 	local main_frame = CUIFrameWindow()
 	main_frame:SetAutoDelete(true)              --parent will delete this item in destructor
 	main_frame:SetWindowName("main_frame")
@@ -106,85 +102,72 @@ function main_menu:InitControls()
 	txt_caption:SetAutoDelete(true)
 	txt_caption:SetWindowName("txt_caption")
 	txt_caption:SetFont(GetFontLetterica25())
-	txt_caption:SetText("MAIN_MENU")
+	txt_caption:SetText("options_dialog")
 
 	txt_caption:SetTextAlign(CGameFont.alCenter)
 	txt_caption:Init(captiontxt_rect.x, captiontxt_rect.y, caption_rect.width, caption_rect.height)
 	main_frame:AttachChild(txt_caption)	
 
 -------- BUTTONS ------------------------------- 
-	--------->> NEW GAME
+	--------->> VIDEO
     local btn = CUIButton()
 	btn:SetAutoDelete(true)
-	btn:SetWindowName("btn_new_game")
-	btn:Init("ui\\ui_button_01", btn_new_rect.x, btn_new_rect.y, btn_new_rect.width, btn_new_rect.height)
-	btn:SetText("New game")
+	btn:SetWindowName("btn_video")
+	btn:Init("ui\\ui_button_01", btn_video_rect.x, btn_video_rect.y, btn_video_rect.width, btn_video_rect.height)
+	btn:SetText("Video")
 	btn:SetFont(GetFontLetterica25())
 	btn:SetTextAlign(CGameFont.alCenter)
 	btn:SetTextY(button_indent)
 	self:Register(btn)
 	main_frame:AttachChild(btn)
 	
-	--------->> LOAD Game	
+	--------->> SOUND
 	btn = CUIButton()
 	btn:SetAutoDelete(true)
-	btn:SetWindowName("btn_load")
-	btn:Init("ui\\ui_button_01", btn_load_rect.x, btn_load_rect.y, btn_load_rect.width, btn_load_rect.height)
-	btn:SetText("Load Game")
+	btn:SetWindowName("btn_sound")
+	btn:Init("ui\\ui_button_01", btn_sound_rect.x, btn_sound_rect.y, btn_sound_rect.width, btn_sound_rect.height)
+	btn:SetText("Sound")
 	btn:SetFont(GetFontLetterica25())
 	btn:SetTextAlign(CGameFont.alCenter)
 	btn:SetTextY(button_indent)
 	self:Register(btn)
 	main_frame:AttachChild(btn)	
 	
-	--------->> MULTIPLAYER
+	--------->> GAME
 	btn = CUIButton()
 	btn:SetAutoDelete(true)
-	btn:SetWindowName("btn_multiplayer")
-	btn:Init("ui\\ui_button_01", btn_multi_rect.x, btn_multi_rect.y, btn_multi_rect.width, btn_multi_rect.height)
-	btn:SetText("Multiplayer")
+	btn:SetWindowName("btn_game")
+	btn:Init("ui\\ui_button_01", btn_game_rect.x, btn_game_rect.y, btn_game_rect.width, btn_game_rect.height)
+	btn:SetText("Game")
 	btn:SetFont(GetFontLetterica25())
 	btn:SetTextAlign(CGameFont.alCenter)
 	btn:SetTextY(button_indent)
 	self:Register(btn)
 	main_frame:AttachChild(btn)
 	
-	--------->> OPTIONS
+	--------->> CONTROLS
 	btn = CUIButton()
 	btn:SetAutoDelete(true)
-	btn:SetWindowName("btn_options")
-	btn:Init("ui\\ui_button_01", btn_opt_rect.x, btn_opt_rect.y, btn_opt_rect.width, btn_opt_rect.height)
-	btn:SetText("Options")
+	btn:SetWindowName("btn_controls")
+	btn:Init("ui\\ui_button_01", btn_control_rect.x, btn_control_rect.y, btn_control_rect.width, btn_control_rect.height)
+	btn:SetText("Controls")
 	btn:SetFont(GetFontLetterica25())
 	btn:SetTextAlign(CGameFont.alCenter)
 	btn:SetTextY(button_indent)
 	self:Register(btn)
 	main_frame:AttachChild(btn)
 	
-	--------->> QUIT TO WINDOWS
+	--------->> BACK
 	btn = CUIButton()
 	btn:SetAutoDelete(true)
-	btn:SetWindowName("btn_quit")
-	btn:Init("ui\\ui_button_01", btn_quit_rect.x, btn_quit_rect.y, btn_quit_rect.width, btn_quit_rect.height)
-	btn:SetText("Quit to Windows")
+	btn:SetWindowName("btn_back")
+	btn:Init("ui\\ui_button_01", btn_back_rect.x, btn_back_rect.y, btn_back_rect.width, btn_back_rect.height)
+	btn:SetText("Back")
 	btn:SetFont(GetFontLetterica25())
 	btn:SetTextAlign(CGameFont.alCenter)
 	btn:SetTextY(button_indent)
 	self:Register(btn)
 	main_frame:AttachChild(btn)
-	
-		--------->> QUIT TO WINDOWS
-	btn = CUIButton()
-	btn:SetAutoDelete(true)
-	btn:SetWindowName("btn_bonus")
-	btn:Init("ui\\ui_button_01", btn_bonus_rect.x, btn_bonus_rect.y, btn_bonus_rect.width, btn_bonus_rect.height)
-	btn:SetText("Bonus")
-	btn:SetFont(GetFontLetterica25())
-	btn:SetTextAlign(CGameFont.alCenter)
-	btn:SetTextY(button_indent)
-	self:Register(btn)
-	main_frame:AttachChild(btn)
-
 		
 	-- Message Box --
 	message_box = CUIMessageBox()
@@ -199,7 +182,7 @@ function main_menu:InitControls()
 	message_box:AutoCenter()
 end
 
-function main_menu:InitCallBacks()
+function options_dialog:InitCallBacks()
 	self:AddCallback("btn_new_game",  ui_events.BUTTON_CLICKED,             self,"OnButton_new_game_clicked")
 	self:AddCallback("button_cancel", ui_events.BUTTON_CLICKED,             self,"OnButton_cancel_clicked")
 	self:AddCallback("message_box",   ui_events.MESSAGE_BOX_OK_CLICKED,     self,"OnMsgOk")
@@ -208,33 +191,33 @@ function main_menu:InitCallBacks()
 	self:AddCallback("message_box",   ui_events.MESSAGE_BOX_NO_CLICKED,     self,"OnMsgNo")
 end
 
-function main_menu:OnButton_new_game_clicked()
+function options_dialog:OnButton_new_game_clicked()
 	local dlg = ui_new_game_dialog.new_game_dlg()
 	level.start_stop_menu(dlg, true)
 end
 
-function main_menu:OnMsgOk()
+function options_dialog:OnMsgOk()
 	local msg_box = self:GetMessageBox("message_box")
 	msg_box:Hide()
 end
 
-function main_menu:OnMsgCancel()
+function options_dialog:OnMsgCancel()
 	local msg_box = self:GetMessageBox("message_box")
 	msg_box:Hide()
 end
 
-function main_menu:OnMsgYes()
+function options_dialog:OnMsgYes()
 	local msg_box = self:GetMessageBox("message_box")
 	msg_box:Hide()
 end
 
-function main_menu:OnMsgNo()
+function options_dialog:OnMsgNo()
 	local msg_box = self:GetMessageBox("message_box")
 	msg_box:Hide()
 end
 
 
-function main_menu:OnKeyboard(dik, keyboard_action)  --virtual function
+function options_dialog:OnKeyboard(dik, keyboard_action)  --virtual function
    CUIScriptWnd.OnKeyboard(self,dik,keyboard_action)
      
    DIK_RETURN = 28
