@@ -28,7 +28,7 @@ function options_base_tab:InitControls(caption, x_pos, y_pos)
 	self.screen   = {x = 0, y = 0, width = 1024, height = 768}
 	
 	-- rect of tab
-	self.main_rect = {x = 0, y = 0, width = 200, height = 200}
+	self.main_rect = {x = 0, y = 0, width = 300, height = 300}
 	-----------------------------------------------------------------
 	self.left_align_x   = self.indent
 	self.right_align_x  = self.main_rect.width - self.indent
@@ -67,5 +67,19 @@ function options_base_tab:InitControls(caption, x_pos, y_pos)
 										 self.main_rect.width, 
 										 self.main_rect.height)
 	self:AttachChild(self.main_frame)
+end
+
+function options_base_tab:OnKeyboard(dik, keyboard_action)
+	CUIScriptWnd.OnKeyboard(self,dik,keyboard_action)
+	
+	DIK_RETURN = 28
+	WINDOW_KEY_PRESSED = 6
+	
+	local bind = dik_to_bind(dik)
+	if bind == key_bindings.kQUIT then
+		level.start_stop_menu(self,true)
+	end  
+
+	return true
 end
 

@@ -3,13 +3,13 @@
 -- Created:     30.11.2004
 -- Author:      Serhiy O. Vynnychenko 
 -- Mail:        narrator@gsc-game.kiev.ua
---
 
-class "options_video_tab" (ui_options_base_tab)
 
-function options_base_tab:__init() super()
+class "options_video_tab" (ui_options_base_tab.options_base_tab)
+
+function options_video_tab:__init() super()
 end
 
-function options_base_tab:__finalize()
+function options_video_tab:__finalize()
 end
 
