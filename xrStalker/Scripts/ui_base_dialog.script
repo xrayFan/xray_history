@@ -65,7 +65,7 @@ function base_dialog:InitControls(caption)
 	-- Left Top Frame
 	self.lt_frame_indent = {x = 20, y = 45}
 	-- Caption text rect
-	self.caption_text_rect = {x = 60, y = -45, width = 500, height = 50 }
+	self.caption_text_rect = {x = 60, y = -25, width = 500, height = 50 }
 	
 	-- Fonts
 	self.caption_font = GetFontLetterica25()
@@ -82,10 +82,10 @@ function base_dialog:InitControls(caption)
 	-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< CODE
 	
 	-- init self position and size
-	self:Init(self.main_rect.x, 
-			  self.main_rect.y, 
-			  self.main_rect.width, 
-			  self.main_rect.height)
+	self:Init(self.screen.x, 
+			  self.screen.y, 
+			  self.screen.width, 
+			  self.screen.height)
 	
 	-- MAIN FRAME WINDOW
 	self.main_frame = CUIFrameWindow()
@@ -95,7 +95,7 @@ function base_dialog:InitControls(caption)
 										 self.main_rect.y, 
 										 self.main_rect.width, 
 										 self.main_rect.height)
-	self.main_frame:InitLeftTop("ui\\ui_frame_over_lt", 20, 45)
+	self.main_frame:InitLeftTop("ui\\ui_frame_over_lt", self.lt_frame_indent.x, self.lt_frame_indent.y)
 	self:AttachChild(self.main_frame)
 	
 	-- CAPTION --
