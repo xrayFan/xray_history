@@ -82,10 +82,15 @@ function main_menu:InitControls()
 	----- CODE -------
 -------- BUTTONS ------------------------------- 
 	--------->> NEW GAME
-    local btn = CUIButton()
+--    local btn = CUIButton()
+	local btn = CUITabButton()
+	
 	btn:SetAutoDelete(true)
 	btn:SetWindowName("btn_new_game")
-	btn:Init("ui\\ui_button_01", btn_new_rect.x, btn_new_rect.y, btn_new_rect.width, btn_new_rect.height)
+--	btn:Init("ui\\ui_button_01", btn_new_rect.x, btn_new_rect.y, btn_new_rect.width, btn_new_rect.height)
+	btn:Init(btn_new_rect.x, btn_new_rect.y, btn_new_rect.width, btn_new_rect.height)
+	btn:InitTexture("ui\\ui_button_01", "ui\\ui_button_02", "ui\\ui_button_03")
+	
 	btn:SetText("New game")
 	btn:SetFont(self.button_font)
 	btn:SetTextAlign(CGameFont.alCenter)
@@ -93,9 +98,7 @@ function main_menu:InitControls()
 	self:Register(btn)
 	self.main_frame:AttachChild(btn)
 
-	tab:AddItem(btn)
-
-	
+		
 	--------->> LOAD Game	
 	btn = CUIButton()
 	btn:SetAutoDelete(true)
@@ -108,7 +111,6 @@ function main_menu:InitControls()
 	self:Register(btn)
 	self.main_frame:AttachChild(btn)	
 	
-	tab:AddItem(btn)
 		
 	--------->> MULTIPLAYER
 	btn = CUIButton()
@@ -122,7 +124,6 @@ function main_menu:InitControls()
 	self:Register(btn)
 	self.main_frame:AttachChild(btn)
 	
-	tab:AddItem(btn)
 	
 	--------->> OPTIONS
 	btn = CUIButton()
