@@ -80,7 +80,7 @@ end
 // Кабаны не escape. Буцают труп, при подходе игрока бегут в аномалию
 // Часть скрипта скопирована из футбола. Так что немного тут есть лишнего
 
-local boar_distance         = 55      // Расстояние, ближе которого кабаны бегут в аномалию
+local boar_distance         = 65      // Расстояние, ближе которого кабаны бегут в аномалию
 local max_distance       	= 10      // На каком расстояние от точки обитания, буду буцать трупп
 
 class "CBoarPlayWithCorpse" (object_binder)
@@ -136,8 +136,10 @@ function CBoarPlayWithCorpse:update(delta)
 		end
 		
 		// Выбираем, в какую точку побежим
-		self:select_run_point()
-		
+		if(self.point == nil) then
+			self:select_run_point()
+		end
+
 		if(self.object:action() == nil) then
 			action(self.object, move(move.run_fwd, self.point), sound(sound.panic), cond(cond.move_end))
 		end
@@ -352,8 +354,8 @@ function CDangerDogs:set_action()
 			action(self.object, anim(anim.stand_idle, 0), sound(sound.threaten), cond(cond.time_end, 1500))		
 		else
 			// еще далеко от сталкера, подходим, но учитываем расстояния. Когда не сильно далеко, то подкрадуемся
-			if(self.object:position():distance_to(self.dead_way:point(0)) < 2) then
-				action(self.object, move(move.steal, self.enemy:position(), 3.5), sound(sound.threaten), cond(cond.move_end))
+			if(self.object:position():distance_to(self.dead_way:point(0)) < 4.5) then
+				action(self.object, move(move.steal, self.enemy:position(), 4), sound(sound.threaten), cond(cond.move_end))
 			else
 				action(self.object, move(move.walk_fwd, self.dead_way:point(0), 1), sound(sound.threaten), cond(cond.move_end))
 			end
