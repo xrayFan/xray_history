@@ -12,17 +12,31 @@ function save_dialog:__finilize()
 end
 
 function save_dialog:InitControls()
-	local indent       = 50
-	local screen       = {width = 1024,height = 768}	
-	local main_rect    = {x = 0,      y = 0,      width = 800, height = 600}	
+	local indent          = 50
+	local screen          = {width = 1024,height = 768}	
+	local main_rect       = {x = 0,      y = 0,      width = 800, height = 600}	
 	main_rect.x = (screen.width - main_rect.width)/2
 	main_rect.y = (screen.height - main_rect.height)/2
-	local caption_rect = {x = 0,      y = 0,      width = main_rect.width, height = indent*2}
-	local edit_rect    = {x = indent, 
-						  y = caption_rect.y + caption_rect.height,
-						  width = 500, 
-						  height = 60}
-	local list_rect    = {x = 0,      y = 0,      width = 500,             height = 400}
+	local caption_rect    = {x = 0,      y = 0,      width = main_rect.width, height = indent*2}
+	local edit_rect       = {x = indent, 
+						     y = caption_rect.y + caption_rect.height + indent,
+						     width = 500, 
+						     height = 60}
+	local btn_ok_rect     = {x = indent,
+							 y = 0,
+							 height = 40,
+							 width  = 135}
+	btn_ok_rect.y = main_rect.height - (btn_ok_rect.height + indent)
+	local btn_cancel_rect = {x = btn_ok_rect.x + btn_ok_rect.width + indent,
+							 y = btn_ok_rect.y,
+							 height = btn_ok_rect.height,
+							 width  = btn_ok_rect.width}
+	local list_rect       = {x = indent,
+						     y = edit_rect.y + edit_rect.height + indent,
+						     width = 0,
+						     height = 0}
+	list_rect.width  = main_rect.width - indent*2
+	list_rect.height = main_rect.height - indent - list_rect.y
 	
 	-- init self position and size
 	self:Init(main_rect.x, main_rect.y, main_rect.width, main_rect.height)
@@ -41,7 +55,7 @@ function save_dialog:InitControls()
 	------------LIST-----------------
    local txt_list   = CUIFrameWindow()  --background for ListView
    txt_list:SetAutoDelete(true)
-   txt_list:Init("ui\\ui_pda_frame",50,100,154,148)
+   txt_list:Init("ui\\ui_pda_frame", list_rect.x, list_rect.y, list_rect.width, list_rect.height)
    -- txt_list:ClipperOn()
    main_static:AttachChild(txt_list) 
 
@@ -58,7 +72,7 @@ function save_dialog:InitControls()
 	btn:SetAutoDelete(true) 
 	btn:SetWindowName("button_ok") --set window name for callback processing
 	
-	btn:Init("ui\\ui_button_01",10,210,135,40)
+	btn:Init("ui\\ui_button_01",btn_ok_rect.x, btn_ok_rect.y, btn_ok_rect.width, btn_ok_rect.height)
 --  btn:Init(10,10,100,100) --or without texture
     btn:SetText("OK")
 	btn:SetTextAlign(CGameFont.alCenter) --horizontal align. possible values are [alCenter,alLeft,alRight]
@@ -70,7 +84,7 @@ function save_dialog:InitControls()
     btn:SetAutoDelete(true)
     btn:SetWindowName("button_cancel")
 	
-	btn:Init("ui\\ui_button_01",130,210,135,40) 	
+	btn:Init("ui\\ui_button_01",btn_cancel_rect.x, btn_cancel_rect.y, btn_cancel_rect.width, btn_cancel_rect.height) 	
 	btn:SetText("cancel")
 	btn:SetTextAlign(CGameFont.alCenter)
 	btn:SetTextY(20)
