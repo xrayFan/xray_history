@@ -1,7 +1,17 @@
 
+
+function fe(item, parent)
+	local p = parent:position()
+	p.x = -31
+	p.y = 1
+	p.z = -61
+	parent:drop_item(item,p)
+end
+
 function main ()
 --	db.actor:give_info_portion("agroprom_military_case")
-	local object 	= level.debug_actor():give_info_portion("agroprom_military_case_have")
+	local a 	= level.debug_actor()
+	a:inventory_for_each(fe)
 end
 
 function _main ()
