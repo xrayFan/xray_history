@@ -3,7 +3,7 @@
 -- Created:     27.9.2004
 -- Author:      Serhiy Vynnychenko (narrator@gsc-game.kiev.ua)
 -- Copyright:   2004 GSC Game World
--- Version:     0.6
+-- Version:     0.8
 
 function main()
 	local dlg = ui_save_dialog.save_dialog()
@@ -216,28 +216,37 @@ end
 
 function save_dialog:OnMsgOk()
 	local msg_box = self:GetMessageBox("message_box")
+	local main_frame = self:GetFrameWindow("main_frame")
+	main_frame:Enable(true)
 	msg_box:Hide()
 end
 
 function save_dialog:OnMsgCancel()
 	local msg_box = self:GetMessageBox("message_box")
+	local main_frame = self:GetFrameWindow("main_frame")
+	main_frame:Enable(true)
 	msg_box:Hide()
 end
 
 function save_dialog:OnMsgYes()
 	local msg_box = self:GetMessageBox("message_box")
+	local main_frame = self:GetFrameWindow("main_frame")
+	main_frame:Enable(true)
 	msg_box:Hide()
 	self:SaveFile(self.new_save)
 end
 
 function save_dialog:OnMsgNo()
 	local msg_box = self:GetMessageBox("message_box")
+	local main_frame = self:GetFrameWindow("main_frame")
+	main_frame:Enable(true)
 	msg_box:Hide()
 end
 
 function save_dialog:OnButton_ok_clicked()
 	-- prepare message box
 	local message_box = self:GetMessageBox("message_box")
+	local main_frame = self:GetFrameWindow("main_frame")	
 	
 	-- Get file name
 	local edit_box = self:GetEditBox("edit_filename")
@@ -247,6 +256,7 @@ function save_dialog:OnButton_ok_clicked()
 	if string.len(self.new_save) == 0 then
 		message_box:SetStyle(CUIMessageBox.STYLE_OK)		
 		message_box:SetText("The file name is empty. Please enter valid name!")
+		main_frame:Enable(false)
 		message_box:Show()
 		return
 	end
@@ -260,6 +270,7 @@ function save_dialog:OnButton_ok_clicked()
 		message_box:SetStyle(CUIMessageBox.STYLE_YES_NO)
 		message_box:SetText("The file with this name already exist. Do you want to overwrite it?")
 		message_box:Show()
+		main_frame:Enable(false)
 		flist:Free()	
 		return
 	end
