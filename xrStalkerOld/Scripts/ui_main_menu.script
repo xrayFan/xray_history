@@ -63,6 +63,10 @@ function main_menu:InitControls()
 					  y = 92, 
 					  width = 256, 
 					  height = 33 }
+	self.tab_rect =  {x = 657, 
+					  y = 92, 
+					  width = 256, 
+					  height = 33 }
 
 	-- Fonts
 	self.caption_font = GetFontLetterica25()
@@ -71,6 +75,7 @@ function main_menu:InitControls()
 	-- profile button
 	local btn_prof_rect   = {x = 640, y = 40, width = 200, height = 30}
 	
+--[[	
 	-- menu buttons	
 	local btn_new_rect    = {x = self.btn_rect.x,
 							 y = self.btn_rect.y,
@@ -101,7 +106,7 @@ function main_menu:InitControls()
 							 y = btn_quit_rect.y + btn_quit_rect.height ,
 							 width = self.btn_rect.width,
 							 height = self.btn_rect.height}
-
+]]
 
 	-- INIT DATA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	
@@ -155,7 +160,12 @@ function main_menu:InitControls()
 --	tabBtn:InitTexture("ui\\ui_button_01", "ui\\ui_button_02", "ui\\ui_button_03")
 --	self.main_frame:AttachChild(tabBtn)
 	
-		
+    ----- CODE -------
+	
+	self.main_tab = ui_main_main_tab.main_main_tab()
+	self.main_tab:InitControls();
+	
+--[[
 	----- CODE -------
 -------- BUTTONS ------------------------------- 
 	--------->> NEW GAME
@@ -237,8 +247,9 @@ function main_menu:InitControls()
 	btn:SetTextY(self.button_indent)
 	self:Register(btn)
 	self.main_frame:AttachChild(btn)
+]]	
 	
-	
+--[[	
 	local combo = CUIComboBox()
 	combo:SetAutoDelete(true)
 	combo:SetWindowName("combo_box")
@@ -250,7 +261,7 @@ function main_menu:InitControls()
 	combo:AddItem("hello")
 	combo:AddItem("bla-bla-bla", true)
 	self.main_frame:AttachChild(combo)
-
+]]
 end
 
 function main_menu:InitCallBacks()
@@ -312,6 +323,11 @@ end
 
 function main_menu:OnKeyboard(dik, keyboard_action)  --virtual function
 	CUIScriptWnd.OnKeyboard(self,dik,keyboard_action)
+	
+	local bind = dik_to_bind(dik)
+	if bind == key_bindings.kQUIT then
+		level.start_stop_menu(self,true)
+	end  
 	
 	DIK_RETURN = 28
 	WINDOW_KEY_PRESSED = 6
