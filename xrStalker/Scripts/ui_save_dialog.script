@@ -8,6 +8,10 @@
 function main()
 	local dlg = ui_save_dialog.save_dialog()
 	level.start_stop_menu(dlg,true)
+	while true do
+		wait(3000)
+	end
+	
 end
 
 class "save_dialog" (CUIScriptWnd)
@@ -19,7 +23,7 @@ function save_dialog:__init() super()
 	
 	self:InitControls()
 	self:InitCallBacks()
---	self:FillList()
+	self:FillList()
 end
 
 function save_dialog:__finalize()
@@ -34,8 +38,8 @@ function save_dialog:FillList()
 	for	it=0, f_cnt-1 	do
 		local file		=	flist:GetAt(it)
 		printf("file[%d]=%s",it,file)
---		table.insert(self.FileTable,file)
---		self:AddItemToList(file)		
+		table.insert(self.FileTable,file)
+		self:AddItemToList(file)		
 	end
 	
 	flist:Free()	
